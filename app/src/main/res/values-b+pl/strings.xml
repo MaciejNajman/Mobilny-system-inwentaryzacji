@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Mobilny system inwentaryzacji</string>
+    <string name="scan_something">Zeskanuj towar do inwentaryzacji</string>
+    <string name="camera_permission">Aby działać aplikacja potrzebuje uprawnień do aparatu</string>
+</resources>
