@@ -3,4 +3,5 @@
     <string name="app_name">Mobilny system inwentaryzacji</string>
     <string name="scan_something">Zeskanuj towar do inwentaryzacji</string>
     <string name="camera_permission">Aby działać aplikacja potrzebuje uprawnień do aparatu</string>
+    <string name="button_list">Lista zeskanowanych towarów</string>
 </resources>

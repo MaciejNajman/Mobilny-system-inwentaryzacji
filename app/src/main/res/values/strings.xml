@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">Mobile inventory system</string>
     <string name="scan_something">Scan an item for stocktaking</string>
-    <string name="camera_permission">The app needs camera permissions to work</string>
+    <string name="camera_permission">This app needs camera permissions to work</string>
+    <string name="button_list">List of scanned items</string>
 </resources>

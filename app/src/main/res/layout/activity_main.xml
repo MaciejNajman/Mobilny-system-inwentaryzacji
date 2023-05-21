@@ -7,15 +7,15 @@
     tools:context=".MainActivity">
 
     <com.budiyev.android.codescanner.CodeScannerView
-        android:layout_width="match_parent"
-        android:layout_height="400dp"
         android:id="@+id/scanner_view"
+        android:layout_width="match_parent"
+        android:layout_height="600dp"
         app:autoFocusButtonColor="@android:color/white"
         app:autoFocusButtonVisible="true"
         app:flashButtonColor="@android:color/white"
         app:flashButtonVisible="true"
-        app:maskColor="#6C000000"/>
-    
+        app:maskColor="#6C000000" />
+
     <TextView
         android:id="@+id/tv_textView"
         android:layout_width="wrap_content"
@@ -24,6 +24,14 @@
         android:layout_centerHorizontal="true"
         android:layout_margin="20dp"
         android:text="@string/scan_something"
-        android:textColor="@android:color/black" />
+        android:textColor="?attr/colorPrimary" />
+
+    <Button
+        android:id="@+id/button_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/button_list"
+        android:layout_below="@+id/tv_textView"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>
