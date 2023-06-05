@@ -16,11 +16,6 @@ class ListItemsActivity : AppCompatActivity() {
         if(intent.getStringArrayListExtra("qrScans") != null) {
             val qrCodes: MutableList<String> = intent.getStringArrayListExtra("qrScans")!!
 
-            // Instanciating an array list (you don't need to do this,
-            // you already have yours).
-            //val qrScans: MutableList<String> = ArrayList()
-            //qrScans.add("foo")
-            //qrScans.add("bar")
             // This is the array adapter, it takes the context of the activity as a
             // first parameter, the type of list view as a second parameter and your
             // array as a third parameter.
@@ -30,7 +25,10 @@ class ListItemsActivity : AppCompatActivity() {
                 qrCodes
             )
 
-            listView.adapter = arrayAdapter //nawet wyświetla listę, ale trzeba dodac powiadomienie o dodaniiu
+            listView.adapter = arrayAdapter
+            //Podsumowanie
+            //Wyświetla listę, po zeskanowaniu wyswietla alert czy dodac towar do listy.
+            //Trzeba dodać porównywanie Inventory (lista towarów w magazynie) z QRScans (lista towarów zeskanowanych) i "Potwierdzono istnienie". Header do listy?
         }
     }
 }

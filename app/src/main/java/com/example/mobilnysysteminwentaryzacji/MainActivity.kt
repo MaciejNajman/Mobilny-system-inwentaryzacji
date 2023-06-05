@@ -31,6 +31,7 @@ import android.util.Log
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -42,7 +43,9 @@ private const val CAMERA_REQUEST_CODE = 101
 class MainActivity : AppCompatActivity() {
 
     private lateinit var codeScanner: CodeScanner
+    private lateinit var builder: AlertDialog.Builder //stworzenie AlertDialog z opóźnioną inicjacją
     private var qrScans: ArrayList<String>? = ArrayList() //tablica do przechowywania kodów (tekstowych)
+    private var inventory: ArrayList<String> = arrayListOf("Półka mała", "Półka średnia", "Półka duża") //tablica do przechowywania towarów (lista z którą porównujemy kody qr), moja baza danych
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,9 +55,9 @@ class MainActivity : AppCompatActivity() {
         val textView = findViewById<TextView>(R.id.tv_textView)
 
         setupPermissions() //przy uruchomieniu sprawdza czy nadano uprawnienia
+        builder = AlertDialog.Builder(this)
 
-
-    //private fun codeScanner() {}
+        //private fun codeScanner() {}
 
         codeScanner = CodeScanner(this, scannerView)
 
@@ -63,13 +66,26 @@ class MainActivity : AppCompatActivity() {
             formats = CodeScanner.ALL_FORMATS
 
             autoFocusMode = AutoFocusMode.SAFE
-            scanMode = ScanMode.CONTINUOUS //ciagle skanuje w poszukiwaniu kodu
+            scanMode =
+                ScanMode.SINGLE //CONTINUOUS-Continuous scan, don't stop preview after decoding the code; SINGLE-Preview will stop after first decoded code
             isAutoFocusEnabled = true
             isFlashEnabled = false
 
             decodeCallback = DecodeCallback {
                 runOnUiThread {
-                    qrScans?.add(it.text) // dodaje na koniec listy zeskanowany tekst z kodu
+                    builder.setTitle(getText(R.string.alert))
+                        .setMessage(getText(R.string.add_item_to_list))
+                        .setCancelable(true)
+                        .setPositiveButton(getText(R.string.yes)) { dialogInterface, it1 ->
+                            qrScans?.add(it.text) // dodaje na koniec listy zeskanowany tekst z kodu
+                        }
+                        .setNegativeButton(getText(R.string.no)) { dialogInterface, it1 ->
+                            dialogInterface.cancel()
+                        }
+                        //show the builder
+                        .show()
+
+                    // qrScans?.add(it.text) // dodaje na koniec listy zeskanowany tekst z kodu
                     textView.text = it.text //wyświetla zeskanowany kod w textView
                 }
             }
@@ -79,15 +95,16 @@ class MainActivity : AppCompatActivity() {
                     Log.e("Main", "Camera initialization error: ${it.message}")
                 }
             }
-        }
 
-//        scanner_view.setOnClickListener { //jesli scanMode jest w trybie SINGLE, to po kliknieciu na ekran zaczyna skanowac
-//            codeScanner.startPreview()
-//        }
+            scannerView.setOnClickListener {//jesli ScanMode jest w trybie SINGLE, to po kliknieciu na ekran zaczyna skanowac
+                textView.text = getText(R.string.scan_something)
+                codeScanner.startPreview()
+            }
+        }
 
         findViewById<Button>(R.id.button_1)
             .setOnClickListener {
-                Log.d("BUTTONS", "User tapped the button_1")
+                //Log.d("BUTTONS", "User tapped the button_1")
                 val intent = Intent(this, ListItemsActivity::class.java)
                 intent.putStringArrayListExtra("qrScans", qrScans)
                 startActivity(intent)
@@ -104,7 +121,7 @@ class MainActivity : AppCompatActivity() {
         super.onPause()
     }
 
-    private fun setupPermissions() {
+    private fun setupPermissions() { //sprawdza czy jest pozwolenie na używanie aparatu
         val permission = ContextCompat.checkSelfPermission(this,
         android.Manifest.permission.CAMERA)
 
@@ -113,7 +130,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun makeRequest() {
+    private fun makeRequest() { //żądza pozwolenia na używanie aparatu
         ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.CAMERA),
         CAMERA_REQUEST_CODE)
     }

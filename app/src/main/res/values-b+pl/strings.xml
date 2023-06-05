@@ -4,4 +4,9 @@
     <string name="scan_something">Zeskanuj towar do inwentaryzacji</string>
     <string name="camera_permission">Aby działać aplikacja potrzebuje uprawnień do aparatu</string>
     <string name="button_list">Lista zeskanowanych towarów</string>
+    <string name="alert">Ostrzeżenie</string>
+    <string name="add_item_to_list">Dodać towar do listy ?</string>
+    <string name="yes">Tak</string>
+    <string name="no">Nie</string>
+    <string name="goods">Towary</string>
 </resources>
