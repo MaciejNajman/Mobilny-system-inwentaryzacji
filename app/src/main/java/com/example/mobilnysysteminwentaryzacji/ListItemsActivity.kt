@@ -1,6 +1,7 @@
 package com.example.mobilnysysteminwentaryzacji
 
 import android.os.Bundle
+import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
@@ -13,6 +14,11 @@ class ListItemsActivity : AppCompatActivity() {
 
         val listView = findViewById<ListView>(R.id.listView)
 
+        //dodawanie nagłówka do listy towarów
+        val header: View = layoutInflater.inflate(R.layout.header_view, null)
+        listView.addHeaderView(header)
+
+        //jesli qrScans nie jest null to przenies dane do qrCodes
         if(intent.getStringArrayListExtra("qrScans") != null) {
             val qrCodes: MutableList<String> = intent.getStringArrayListExtra("qrScans")!!
 
@@ -27,8 +33,8 @@ class ListItemsActivity : AppCompatActivity() {
 
             listView.adapter = arrayAdapter
             //Podsumowanie
-            //Wyświetla listę, po zeskanowaniu wyswietla alert czy dodac towar do listy.
-            //Trzeba dodać porównywanie Inventory (lista towarów w magazynie) z QRScans (lista towarów zeskanowanych) i "Potwierdzono istnienie". Header do listy?
+            //Wyświetla listę, po zeskanowaniu wyswietla alert czy dodac towar do listy. Lista towarów ma nagłówek "Towary".
+            //Trzeba dodać porównywanie Inventory (lista towarów w magazynie) z QRScans (lista towarów zeskanowanych) i "Potwierdzono istnienie".
         }
     }
 }

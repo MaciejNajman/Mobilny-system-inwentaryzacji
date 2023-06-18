@@ -102,6 +102,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        //przycisk do wyświetlania listy towarów
         findViewById<Button>(R.id.button_1)
             .setOnClickListener {
                 //Log.d("BUTTONS", "User tapped the button_1")
